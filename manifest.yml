@@ -14,6 +14,8 @@ spec:
       labels:
         app: spring-boot-app
     spec:
+      imagePullSecrets:
+        - name: harborcred
       containers:
       - name: spring-boot-app
         image: harbor.run.haas-445.pez.pivotal.io/jenkins/spring-boot-service:latest
