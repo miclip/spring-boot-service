@@ -8,6 +8,7 @@ pipeline {
         HARBOR  = credentials('harbor')
         IMAGE_NAME = "harbor.run.haas-445.pez.pivotal.io/jenkins/spring-boot-service"
         REPO_URL= "https://harbor.run.haas-445.pez.pivotal.io/jenkins"
+        JAR_NAME = "gs-rest-service-0.1.0.jar"
     }
     stages {
         stage ('Initialize') {
@@ -33,8 +34,8 @@ pipeline {
         stage ('Docker Build') {
              steps {
                          sh '''
-                             cp "${WORKSPACE}/target/gs-rest-service-0.1.0.jar" "${WORKSPACE}/"
-                             docker build -t $IMAGE_NAME . --build-arg JAR_FILE=gs-rest-service-0.1.0.jar
+                             cp "${WORKSPACE}/target/${JAR_NAME}" "${WORKSPACE}/"
+                             docker build -t $IMAGE_NAME . --build-arg JAR_FILE=$JAR_NAME
                              docker login $REPO_URL -u "$HARBOR_USR" -p "$HARBOR_PSW"
                              docker push $IMAGE_NAME
                           '''
