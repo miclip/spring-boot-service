@@ -39,5 +39,18 @@ pipeline {
                     }
 
             }
+        stage ('Kubernetes Deploy') {
+             steps {
+                    withCredentials([certificate(aliasVariable: '', credentialsId: 'cicd_user', keystoreVariable: 'CICD_USER_CERT', passwordVariable: 'CICD_USER_CERT_PASSWORD')]) {
+                         sh '''
+                              openssl pkcs12 -in $CICD_USER_CERT -out cicd.key -nocerts -nodes -passin pass:$CICD_USER_CERT_PASSWORD
+                              openssl pkcs12 -in $CICD_USER_CERT -out cicd.crt -clcerts -nokeys -passin pass:$CICD_USER_CERT_PASSWORD
+                              kubectl config set-credentials cicd --client-certificate=cicd.crt --client-key=cicd.key
+                              kubectl config set-context cicd-context --cluster=dev --user=cicd
+                              kubectl apply -f "${WORKSPACE}/manifest.yml" -n apps
+                          '''
+                      }
+                   }
+            }
     }
 }
