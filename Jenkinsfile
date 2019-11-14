@@ -50,9 +50,6 @@ pipeline {
 								docker push harbor.run.haas-445.pez.pivotal.io/jenkins/spring-boot-service
                           '''
                     }
-					withCredentials([certificate(aliasVariable: '', credentialsId: 'cicd_user', keystoreVariable: 'CICD_USER_CERT', passwordVariable: 'CICD_USER_CERT_PASSWORD')]) {
-                       // some block
-                    }
 
             }
     }
