@@ -26,9 +26,6 @@ pipeline {
             post {
                 success {
                     junit 'target/surefire-reports/**/*.xml'
-					//withCredentials([certificate(aliasVariable: '', credentialsId: 'cicd_user', keystoreVariable: 'CICD_USER_CERT', passwordVariable: 'CICD_USER_CERT_PASSWORD')]) {
-                       // some block
-                    // }
                 }
             }
         }
