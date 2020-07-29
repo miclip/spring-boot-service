@@ -1,8 +1,7 @@
 pipeline {
     agent any
 	
-	
-    stages {
+
         
 
         stage ('Docker Build') {
@@ -18,4 +17,4 @@ pipeline {
         
             }
     
-}
+
